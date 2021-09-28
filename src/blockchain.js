@@ -1,3 +1,5 @@
+const sha256 = require("sha256");
+
 function Blockchain() {
   this.chain = [];
   this.pendingTransactions = [];
@@ -37,4 +39,15 @@ Blockchain.prototype.createNewTransaction = function (
   };
   this.pendingTransactions.push(newTransaction);
   return newTransaction;
+};
+
+Blockchain.prototype.hashBlock = function (
+  previousBlockHash,
+  currentBlockData,
+  nonce
+) {
+  const dataAsString =
+    nonce.toString() + JSON.stringify(currentBlockData) + previousBlockHash;
+  const hash = sha256(dataAsString);
+  return hash;
 };
