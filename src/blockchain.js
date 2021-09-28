@@ -1,6 +1,6 @@
 function Blockchain() {
   this.chain = [];
-  this.newTransactions = [];
+  this.pendingTransactions = [];
 }
 
 Blockchain.prototype.createNewBlock = function (
@@ -13,14 +13,24 @@ Blockchain.prototype.createNewBlock = function (
     previousBlockHash,
     hash,
     index: this.chain.length + 1,
-    transactions: this.newTransactions,
+    transactions: this.pendingTransactions,
     timestamp: Date.now(),
   };
-  this.newTransactions = [];
+  this.pendingTransactions = [];
   this.chain.push(newBlock);
   return newBlock;
 };
 
 Blockchain.prototype.getLastBlock = function () {
   return this.chain[this.chain.length - 1];
+};
+
+Blockchain.prototype.createTransaction = function (amount, sender, recipient) {
+  const newTransaction = {
+    amount,
+    sender,
+    recipient,
+  };
+  this.pendingTransactions.push(newTransaction);
+  return newTransaction;
 };
