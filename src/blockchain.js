@@ -8,7 +8,7 @@ Blockchain.prototype.createNewBlock = function (
   previousBlockHash,
   hash
 ) {
-  const block = {
+  const newBlock = {
     nonce,
     previousBlockHash,
     hash,
@@ -17,6 +17,10 @@ Blockchain.prototype.createNewBlock = function (
     timestamp: Date.now(),
   };
   this.newTransactions = [];
-  this.chain.push(block);
-  return block;
+  this.chain.push(newBlock);
+  return newBlock;
+};
+
+Blockchain.prototype.getLastBlock = function () {
+  return this.chain[this.chain.length - 1];
 };
