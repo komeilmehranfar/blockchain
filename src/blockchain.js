@@ -65,3 +65,5 @@ Blockchain.prototype.proofOfWork = function (
   }
   return nonce;
 };
+
+module.exports = Blockchain;
