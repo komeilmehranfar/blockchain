@@ -12,7 +12,12 @@ app.get("/blockchain", function (req, res) {
 });
 
 app.post("/transaction", function (req, res) {
-  res.json(req.body);
+  const blockIndex = blockchain.createNewTransaction(
+    req.body.amount,
+    req.body.sender,
+    req.body.recipient
+  );
+  res.json({ node: `Transaction will be added in block ${blockIndex}.` });
 });
 
 app.get("/mine", function (req, res) {
