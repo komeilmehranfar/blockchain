@@ -21,7 +21,16 @@ app.post("/transaction", function (req, res) {
 });
 
 app.get("/mine", function (req, res) {
-  res.send("mine");
+  const lastBlock = blockchain.getLastBlock();
+  const previousBlockHash = lastBlock["hash"];
+  const currentBlockData = {
+    transactions: blockchain.pendingTransactions,
+    index: lastBlock["index"],
+  };
+  const nonce = blockchain.proofOfWork(previousBlockHash, currentBlockData);
+  const hash = blockchain.hashBlock(previousBlockHash, currentBlockData, nonce);
+  const newBlock = blockchain.createNewBlock(nonce, previousBlockHash, hash);
+  res.json({ note: "New Block is Successfully mined", block: newBlock });
 });
 
 app.listen(3000, () => console.log("listen to port 3000..."));
